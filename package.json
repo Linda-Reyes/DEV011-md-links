@@ -19,6 +19,6 @@
     "test": "jest --coverage --verbose"
   },
   "keywords": [],
-  "author": "",
+  "author": "Linda Reyes",
   "license": "ISC"
 }
