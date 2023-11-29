@@ -46,10 +46,31 @@ function readFileMd(validPath) {
    });
  }
 
- module.exports = {
-    isAbsolutePath,
-    convertAbsolute,
-    pathExists,
-    validMdextension,
-    readFileMd,   
- };
+ // -----funcion extraer link y crear array-----
+ function findLinks(content, filePath) {
+  return new Promise((resolve, reject) => {
+     const links = [];
+     const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+     let match;
+
+     while ((match = regex.exec(content)) !== null) {
+        links.push({
+           text: match[1],
+           href: match[2],
+           file: filePath,
+        });
+     }
+
+     resolve(links);
+  });
+}
+ 
+
+module.exports = {
+   isAbsolutePath,
+   convertAbsolute,
+   pathExists,
+   validMdextension,
+   readFileMd,
+   findLinks, 
+};
