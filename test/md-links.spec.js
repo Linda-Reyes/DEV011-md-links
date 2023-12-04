@@ -1,11 +1,16 @@
 const mdLinks = require('../src/index');
-
+const {
+  convertAbsolute,
+  pathExists,
+  validMdextension,
+  readFileMd,
+  findLinks,
+} = require('./functions');
 
 describe('mdLinks', () => {
   it('should...', () => {
     console.log('FIX ME!');
   });
-
 });
 
 describe('mdLinks', () => {
@@ -24,4 +29,28 @@ describe('mdLinks', () => {
       expect(error).toBe("La ruta no existe");
     });
   });
+});
+
+
+
+describe('mdLinks', () => {
+  test('Debería retornar una promesa que resuelve a un array de links', () => {
+    // Puedes realizar pruebas aquí para mdLinks sin validar los enlaces
+    const path = 'README.md';
+
+    return mdLinks(path).then((links) => {
+      expect(links).toEqual(expect.any(Array));
+      // Añade más aserciones según tus necesidades
+    });
+  });
+
+  test('Debería retornar una promesa que resuelve a un array de links con validación', () => {
+    // Puedes realizar pruebas aquí para mdLinks con validación de enlaces
+    const path = 'README.md';
+
+    return mdLinks(path, true).then((links) => {
+      expect(links).toEqual(expect.any(Array));
+    });
+  });
+
 });
