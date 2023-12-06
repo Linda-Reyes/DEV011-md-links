@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 
 
 // -----funcion es una ruta absoluta(booleano)-----
@@ -46,9 +47,9 @@ function readFileMd(validPath) {
    });
  }
 
- // -----funcion extraer link y crear array-----
- function findLinks(content, filePath) {
-  return new Promise((resolve, reject) => {
+// -----funcion extraer link y crear array-----
+function findLinks(content, filePath) {
+   return new Promise((resolve, reject) => {
      const links = [];
      const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
      let match;
@@ -64,7 +65,31 @@ function readFileMd(validPath) {
      resolve(links);
   });
 }
+
+function validateLinks(links) {
+   // Mapea sobre la lista de enlaces y realiza una petición HTTP para cada uno
+   const linkPromises = links.map(link => {
+     return axios.head(link.href)
+       .then(response => ({
+         href: link.href,
+         text: link.text,
+         file: link.file,
+         status: response.status,
+         ok: response.status >= 200 && response.status < 400 ? 'ok' : 'fail',
+       }))
+       .catch(error => ({
+         href: link.href,
+         text: link.text,
+         file: link.file,
+         status: error.response ? error.response.status : 'N/A',
+         ok: 'fail',
+       }));
+   });
  
+   // Resuelve la promesa una vez que todas las validaciones han sido completadas
+   return Promise.all(linkPromises);
+ }
+
 
 module.exports = {
    isAbsolutePath,
@@ -72,5 +97,6 @@ module.exports = {
    pathExists,
    validMdextension,
    readFileMd,
-   findLinks, 
+   findLinks,
+   validateLinks,
 };
