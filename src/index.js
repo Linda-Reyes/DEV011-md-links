@@ -7,7 +7,8 @@ const {
   validateLinks,
 } = require('./functions');
 
-function mdLinks(path, validate = false) {
+
+function mdLinks(userPath, validate = false) {
   return new Promise((resolve, reject) => {
   //-----identifica si la ruta es adsoluta, sino la convierte-----
   const absolutePath = convertAbsolute(path);

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const userPath = 'test/prueba.md';
 
 
 // -----funcion es una ruta absoluta(booleano)-----
@@ -89,7 +90,6 @@ function validateLinks(links) {
    // Resuelve la promesa una vez que todas las validaciones han sido completadas
    return Promise.all(linkPromises);
  }
-
 
 module.exports = {
    isAbsolutePath,
