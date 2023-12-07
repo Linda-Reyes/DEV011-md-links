@@ -68,27 +68,37 @@ function findLinks(content, filePath) {
 }
 
 function validateLinks(links) {
-  const linkPromises = links.map(link => {
+  const linkPromises = links.map((link, index) => {
     return axios.head(link.href)
-      .then(response => ({
-        href: link.href,
-        text: link.text,
-        file: link.file,
-        status: response.status,
-        ok: response.status >= 200 && response.status < 400 ? 'ok' : 'fail',
-      }))
-      .catch(error => ({
-        href: link.href,
-        text: link.text,
-        file: link.file,
-        status: error.response ? error.response.status : 'N/A',
-        ok: 'fail',
-      }));
+      .then(response => {
+        const validationResult = {
+          href: link.href,
+          text: link.text,
+          file: link.file,
+          status: response.status,
+          ok: response.status >= 200 && response.status < 400 ? 'ok' : 'fail',
+        };
+
+        return validationResult;
+      })
+      .catch(error => {
+        const validationResult = {
+          href: link.href,
+          text: link.text,
+          file: link.file,
+          status: error.response ? error.response.status : 'N/A',
+          ok: 'fail',
+        };
+
+        console.error(`Error enlace (${index + 1}):`, validationResult);
+
+        return validationResult;
+      });
   });
 
   return Promise.all(linkPromises);
 }
- 
+
  module.exports = {
    isAbsolutePath,
    convertAbsolute,
@@ -98,3 +108,4 @@ function validateLinks(links) {
    findLinks,
    validateLinks,
  };
+ 

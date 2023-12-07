@@ -5,7 +5,6 @@ const {
   convertAbsolute,
   pathExists,
   validMdextension,
-  readFileMd,
 } = require('../src/functions');
 
 
