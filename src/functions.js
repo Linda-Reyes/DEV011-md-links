@@ -68,30 +68,28 @@ function findLinks(content, filePath) {
 }
 
 function validateLinks(links) {
-   // Mapea sobre la lista de enlaces y realiza una petición HTTP para cada uno
-   const linkPromises = links.map(link => {
-     return axios.head(link.href)
+  const linkPromises = links.map(link => {
+    return axios.head(link.href)
       .then(response => ({
-      href: link.href,
-      text: link.text,
-      file: link.file,
-      status: response.status,
-      ok: response.status >= 200 && response.status < 400 ? 'ok' : 'fail',
+        href: link.href,
+        text: link.text,
+        file: link.file,
+        status: response.status,
+        ok: response.status >= 200 && response.status < 400 ? 'ok' : 'fail',
       }))
       .catch(error => ({
-      href: link.href,
-      text: link.text,
-      file: link.file,
-      status: error.response ? error.response.status : 'N/A',
-      ok: 'fail',
+        href: link.href,
+        text: link.text,
+        file: link.file,
+        status: error.response ? error.response.status : 'N/A',
+        ok: 'fail',
       }));
-   });
- 
-   // Resuelve la promesa una vez que todas las validaciones han sido completadas
-   return Promise.all(linkPromises);
- }
+  });
 
-module.exports = {
+  return Promise.all(linkPromises);
+}
+ 
+ module.exports = {
    isAbsolutePath,
    convertAbsolute,
    pathExists,
@@ -99,4 +97,4 @@ module.exports = {
    readFileMd,
    findLinks,
    validateLinks,
-};
+ };

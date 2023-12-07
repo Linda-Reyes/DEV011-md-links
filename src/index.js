@@ -1,4 +1,4 @@
-const { 
+const {
   convertAbsolute,
   pathExists,
   validMdextension,
@@ -7,30 +7,20 @@ const {
   validateLinks,
 } = require('./functions');
 
-
 function mdLinks(userPath, validate = false) {
   return new Promise((resolve, reject) => {
-  //-----identifica si la ruta es adsoluta, sino la convierte-----
-  const absolutePath = convertAbsolute(path);
-  // -----identifica si la ruta existe-----
-  pathExists(absolutePath)
-    .then(() => validMdextension(absolutePath)) 
-    .then(() => readFileMd(absolutePath))
-    .then(fileContent => findLinks(fileContent, absolutePath))
-    //.then(links => {
-    //resolve(links);
-    //})
-    findLinks(fileContent, absolutePath)
+    const absolutePath = convertAbsolute(userPath);
+    pathExists(absolutePath)
+      .then(() => validMdextension(absolutePath))
+      .then(() => readFileMd(absolutePath))
+      .then(fileContent => findLinks(fileContent, absolutePath))
       .then(links => {
         if (validate) {
-          // Si validate es true, realizar validación de los enlaces
-          return validateLinks(links);
+          return validateLinks(links).then(result => resolve(result));
         } else {
-          // Si validate es false, resolver la promesa con los enlaces sin validar
           resolve(links);
         }
       })
-      .then(result => resolve(result))
       .catch(error => reject(error));
   });
 }
