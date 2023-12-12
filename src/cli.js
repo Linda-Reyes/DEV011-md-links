@@ -1,11 +1,10 @@
+#!/usr/bin/env node
 const { validateLinks } = require('./functions');
 const mdLinks = require('./index');
-
-const userPath = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/test/prueba.md';
-
-// Convierte el string 'true' a un valor booleano
-const validateArg = process.argv.includes('--validate');
-const validate = validateArg;
+//const userPath = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md';
+const args = process.argv.slice(2); // Obtén los argumentos de la línea de comandos
+const userPath = args[0];
+const validate = args.includes('--validate');
 
 mdLinks(userPath, validate)
   .then((res) => {

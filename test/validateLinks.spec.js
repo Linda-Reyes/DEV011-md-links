@@ -31,7 +31,7 @@ describe('validateLinks', () => {
     });
   });
 
-  it('should handle errors', () => {
+  it('debería manejar errores', () => {
     const links = [
       {
         href: 'http://www.ejemplo-invalido.com',
