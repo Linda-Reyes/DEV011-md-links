@@ -86,7 +86,7 @@ function validateLinks(links) {
           href: link.href,
           text: link.text,
           file: link.file,
-          status: error.response ? error.response.status : 'N/A',
+          status: error.response ? error.response.status : 404,
           ok: 'fail',
         };
 

@@ -1,7 +1,7 @@
 const { validateLinks } = require('./functions');
 const mdLinks = require('./index');
 
-const userPath = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md';
+const userPath = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/test/prueba.md';
 
 // Convierte el string 'true' a un valor booleano
 const validateArg = process.argv.includes('--validate');

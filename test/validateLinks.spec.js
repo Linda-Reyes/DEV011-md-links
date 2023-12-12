@@ -1,56 +1,59 @@
 const axios = require('axios');
-const mdLinks = require('./index');
-const { validateLinks } = require('./functions');
+const { validateLinks } = require('../src/functions');
+const path = require('path');
 
 jest.mock('axios');
 
 describe('validateLinks', () => {
-  it('should validate links', async () => {
+  it('deberia validar links', () => {
     const links = [
-      { href: 'https://curriculum.laboratoria.la/es/topics/javascript/04-arrays',
-      text: 'Arreglos',
-      file: 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md'
+      {
+        href: 'https://www.google.com',
+        text: 'enlace a Google',
+        file: 'test/prueba.md',
       },
     ];
 
     const expectedResults = [
-      { href: 'https://curriculum.laboratoria.la/es/topics/javascript/04-arrays',
-      text: 'Arreglos',
-      file: 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md',
-      status: 200,
-      ok: 'ok' },
+      {
+        href: 'https://www.google.com',
+        text: 'enlace a Google',
+        file: 'test/prueba.md',
+        status: 200,
+        ok: 'ok',
+      },
     ];
 
-    expectedResults.forEach((result, index) => {
-      axios.head.mockResolvedValue({ status: result.status });
+    axios.head.mockResolvedValue({ status: 200 });
+
+    return validateLinks(links).then(results => {
+      expect(results).toEqual(expectedResults);
     });
-
-    const results = await validateLinks(links);
-
-    expect(results).toEqual(expectedResults);
   });
 
-  it('should handle errors', async () => {
+  it('should handle errors', () => {
     const links = [
-      { href: 'https://nodejs.org/es/',
-      text: 'Node.js',
-      file: 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md' },
+      {
+        href: 'http://www.ejemplo-invalido.com',
+        text: 'enlace a ejemplo-invalido.com',
+        file: 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/test/prueba.md',
+      },
     ];
 
     const expectedResults = [
-      { href: 'https://nodejs.org/es/',
-      text: 'Node.js',
-      file: 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md',
-      status: 404,
-      ok: 'fail' },
+      {
+        href: 'http://www.ejemplo-invalido.com',
+        text: 'enlace a ejemplo-invalido.com',
+        file: 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/test/prueba.md',
+        status: 404,
+        ok: 'fail',
+      },
     ];
 
-    expectedResults.forEach((result, index) => {
-      axios.head.mockResolvedValue({ status: result.status });
+    axios.head.mockRejectedValue({ response: { status: 404 } });
+
+    return validateLinks(links).then(results => {
+      expect(results).toEqual(expectedResults);
     });
-
-    const results = await validateLinks(links);
-
-    expect(results).toEqual(expectedResults);
   });
 });

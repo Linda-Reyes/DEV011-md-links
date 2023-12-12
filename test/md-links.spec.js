@@ -8,24 +8,19 @@ const {
 } = require('../src/functions');
 
 
-describe('mdLinks', () => {
-  it('should...', () => {
-    console.log('FIX ME!');
-  });
-});
 
 describe('mdLinks', () => {
   it('debería ser una función', () => {
     expect(typeof mdLinks).toBe('function');
   });
   it('debería devolver una promesa', () => {
-    const filePath = 'README.md';
+    const filePath = 'test/prueba.md';
     const result = mdLinks(filePath);
     expect(result).toBeInstanceOf(Promise);
   }); 
     
   it('Debería retornar una promesa que resuelve a un array de links', () => {
-    const path = 'README.md';
+    const path = 'test/prueba.md';
 
     return mdLinks(path).then((links) => {
       expect(links).toEqual(expect.any(Array));
@@ -33,7 +28,7 @@ describe('mdLinks', () => {
   });
 
   it('Debería retornar una promesa que resuelve a un array de links con validación', () => {
-    const path = 'README.md';
+    const path = 'test/prueba.md';
 
     return mdLinks(path, true).then((links) => {
       expect(links).toEqual(expect.any(Array));
@@ -48,20 +43,20 @@ describe('isAbsolutePath', () => {
   });
 
   test('Debería retornar false para rutas relativas', () => {
-    const result = isAbsolutePath('README.md');
+    const result = isAbsolutePath('test/prueba.md');
     expect(result).toBe(false);
   });
 });
 
 describe('convertAbsolute', () => {
   test('Debería retornar la ruta absoluta si ya es absoluta', () => {
-    const ruta = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md';
+    const ruta = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/test/prueba.md';
     const result = convertAbsolute(ruta);
     expect(result).toBe(ruta);
   });
 
   test('Debería retornar la ruta convertida a absoluta si es relativa', () => {
-    const rutaRelativa = 'README.md';
+    const rutaRelativa = 'test/prueba.md';
     const rutaAbsoluta = path.resolve(rutaRelativa);
     const result = convertAbsolute(rutaRelativa);
     expect(result).toBe(rutaAbsoluta);
@@ -70,19 +65,19 @@ describe('convertAbsolute', () => {
 
 describe('pathExists', () => {
   test('Debería resolver para rutas existentes', () => {
-    const rutaExistente = 'README.md';
+    const rutaExistente = 'test/prueba.md';
     return expect(pathExists(rutaExistente)).resolves.toBe('La ruta existe');
   });
 
   test('Debería rechazar para rutas que no existen', () => {
-    const rutaNoExistente = '.README.xyz';
+    const rutaNoExistente = 'test/prueba.xyz';
     return expect(pathExists(rutaNoExistente)).rejects.toThrow('La ruta no existe');
   });
 });
 
 describe('validMdextension', () => {
   test('Debería resolver para archivos Markdown válidos', () => {
-    const archivoMd = 'README.md';
+    const archivoMd = 'test/prueba.md';
     return expect(validMdextension(archivoMd)).resolves.toBe('Es un archivo Markdown');
   });
 
