@@ -5,10 +5,12 @@ const {
   readFileMd,
   findLinks,
   validateLinks,
+  getStats
 } = require('./functions');
 
-function mdLinks(userPath, validate = false) {
+function mdLinks(userPath, validate = false, stats = false) {
   return new Promise((resolve, reject) => {
+
     const absolutePath = convertAbsolute(userPath);
     pathExists(absolutePath)
       .then(() => validMdextension(absolutePath))
@@ -22,6 +24,13 @@ function mdLinks(userPath, validate = false) {
         }
       })
       .catch(error => reject(error));
+      // ------estadísticas básicas sobre los links---
+      if (stats) {
+        const statistics = getStats(links);
+        resolve(statistics);
+      } else {
+        resolve(links);
+      }
   });
 }
 

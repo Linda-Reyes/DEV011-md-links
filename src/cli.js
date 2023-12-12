@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-const { validateLinks } = require('./functions');
-const mdLinks = require('./index');
-//const userPath = 'C:/Users/juan/Desktop/LABORATORIA/DEV011-md-links/README.md';
-const args = process.argv.slice(2); // Obtén los argumentos de la línea de comandos
+const { mdLinks } = require('.'); 
+
+const args = process.argv.slice(2);
 const userPath = args[0];
 const validate = args.includes('--validate');
+const stats = args.includes('--stats');
 
-mdLinks(userPath, validate)
-  .then((res) => {
-    console.log("Esta es la respuesta", res);
+mdLinks(userPath, { validate: validate, stats: stats })
+  .then((result) => {
+    console.log("Esta es la respuesta", result);
   })
   .catch((err) => {
     console.error("Este es el error", err);
