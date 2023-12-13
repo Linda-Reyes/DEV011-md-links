@@ -37,5 +37,4 @@ function mdLinks(userPath, options = {}) {
   });
 }
 
-
 module.exports = mdLinks;
