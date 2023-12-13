@@ -67,8 +67,8 @@ function findLinks(content, filePath) {
   });
 }
 
-function validateLinks(links) {
-  const linkPromises = links.map((link, index) => {
+function validateLinks(links, validate, stats) {
+  const linkPromises = links.map((link, index) => { // Agregué el parámetro 'index'
     return axios.head(link.href)
       .then(response => {
         const validationResult = {
@@ -99,14 +99,21 @@ function validateLinks(links) {
   return Promise.all(linkPromises);
 }
 
-function getStats(links) {
+function getStats(links, includeBroken = false) {
   const totalLinks = links.length;
   const uniqueLinks = [...new Set(links.map(link => link.href))].length;
 
-  return {
+  const stats = {
     total: totalLinks,
     unique: uniqueLinks,
   };
+
+  if (includeBroken) {
+    const brokenLinks = links.filter(link => link.ok === 'fail').length;
+    stats.broken = brokenLinks;
+  }
+
+  return stats;
 }
 
  module.exports = {
