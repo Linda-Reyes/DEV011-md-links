@@ -1,8 +1,11 @@
 {
-  "name": "md-links",
+  "name": "md-links-linda-reyes",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.x"
+  },
+  "bin": {
+    "md-links": "./src/cli.js"
   },
   "bootcamp": {
     "createdAt": "2023-09-22T12:23:39.903Z",
@@ -16,7 +19,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --coverage --verbose"
+    "test": "jest --coverage --verbose",
+    "md-links": "./src/cli.js"
   },
   "keywords": ["markdown", "links", "validator"],
   "author": "Linda Reyes",
@@ -25,5 +29,5 @@
   "dependencies": {
     "axios": "^1.6.2"
   }
-  
+
 }

@@ -90,8 +90,6 @@ function validateLinks(links, validate, stats) {
           ok: 'fail',
         };
 
-        console.error(`Error enlace (${index + 1}):`, validationResult);
-
         return validationResult;
       });
   });
@@ -108,6 +106,7 @@ function getStats(links, includeBroken = false) {
     unique: uniqueLinks,
   };
 
+  
   if (includeBroken) {
     const brokenLinks = links.filter(link => link.ok === 'fail').length;
     stats.broken = brokenLinks;

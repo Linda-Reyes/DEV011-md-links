@@ -9,7 +9,7 @@ const {
 } = require('./functions');
 
 function mdLinks(userPath, options = {}) {
-  const { validate = false, stats = false } = options;
+  const { validate = false } = options;
 
   return new Promise((resolve, reject) => {
     const absolutePath = convertAbsolute(userPath);
@@ -20,19 +20,20 @@ function mdLinks(userPath, options = {}) {
       .then(fileContent => findLinks(fileContent, absolutePath))
       .then(links => {
         if (validate) {
-          return validateLinks(links, validate, stats);
+          resolve (validateLinks(links, validate ));
         } else {
-          return links;
+          resolve (links);
         }
       })
-      .then(result => {
-        if (stats) {
+      //.then(result => {
+        /*if (stats) {
           const statistics = getStats(result, validate);
           resolve(statistics);
         } else {
           resolve(result);
-        }
-      })
+        }*/
+      //})
+      
       .catch(error => reject(error));
   });
 }
