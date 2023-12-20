@@ -19,7 +19,11 @@
     "test": "jest --coverage --verbose",
     "md-links": "./src/cli.js"
   },
-  "keywords": ["markdown", "links", "validator"],
+  "keywords": [
+    "markdown",
+    "links",
+    "validator"
+  ],
   "author": "Linda Reyes",
   "license": "ISC",
   "preferGlobal": true,
@@ -27,6 +31,6 @@
     "axios": "^1.6.2"
   },
   "bin": {
-    "md-links": "./src/cli.js"
+    "md-links": "src/cli.js"
   }
 }
