@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -67,6 +68,7 @@ function findLinks(content, filePath) {
   });
 }
 
+// -----funcion para Validar links-----
 function validateLinks(links, validate, stats) {
   const linkPromises = links.map((link, index) => { // Agregué el parámetro 'index'
     return axios.head(link.href)
@@ -97,6 +99,7 @@ function validateLinks(links, validate, stats) {
   return Promise.all(linkPromises);
 }
 
+// -----funcion estadisticas-----
 function getStats(links, includeBroken = false) {
   const totalLinks = links.length;
   const uniqueLinks = [...new Set(links.map(link => link.href))].length;
@@ -125,5 +128,4 @@ function getStats(links, includeBroken = false) {
    validateLinks,
    getStats
  };
-
  

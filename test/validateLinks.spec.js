@@ -1,5 +1,6 @@
 const axios = require('axios');
-const { validateLinks } = require('../src/functions');
+const mdLinks = require('../src/index');
+const { validateLinks, getStats } = require('../src/functions');
 const path = require('path');
 
 jest.mock('axios');
@@ -55,5 +56,16 @@ describe('validateLinks', () => {
     return validateLinks(links).then(results => {
       expect(results).toEqual(expectedResults);
     });
+  });
+});
+
+describe('getStats', () => {
+  it('Debería calcula la estadística correctamente', () => {
+      const links = [
+          { href: 'https://www.google.com'},
+          { href: 'https://github.com'},
+      ];
+      const stats = getStats(links);
+      expect(stats).toEqual({ total: 2, unique: 2 });
   });
 });

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const {
   convertAbsolute,
   pathExists,
@@ -5,7 +6,6 @@ const {
   readFileMd,
   findLinks,
   validateLinks,
-  getStats
 } = require('./functions');
 
 function mdLinks(userPath, options = {}) {
@@ -25,14 +25,6 @@ function mdLinks(userPath, options = {}) {
           resolve (links);
         }
       })
-      //.then(result => {
-        /*if (stats) {
-          const statistics = getStats(result, validate);
-          resolve(statistics);
-        } else {
-          resolve(result);
-        }*/
-      //})
       
       .catch(error => reject(error));
   });

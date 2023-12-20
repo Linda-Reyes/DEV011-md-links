@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const { getStats } = require('./functions');
 const mdLinks = require('./index');
 const args = process.argv.slice(2);
